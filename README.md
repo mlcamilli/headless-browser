@@ -6,7 +6,7 @@ To use, inside the docker container bring up the python shell.
 
 
 ```python
->>> from chrome_headless import ChromeScraper, FirefoxScraper, PhantomScraper
+>>> from headless_browser import ChromeScraper, FirefoxScraper, PhantomScraper
 >>> scraper = ChromeScraper()
 >>> scraper.get('http://www.google.com')
 ```
