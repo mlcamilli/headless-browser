@@ -75,5 +75,11 @@ class ChromeScraper(Scraper):
 class FirefoxScraper(Scraper):
 
     def initialize(self):
+        self.display = Display(visible=0, size=(1920, 1080))
+        self.display.start()
         self.browser = webdriver.Firefox(capabilities=self.desired,
                                          proxy=self.proxy)
+
+    def quit(self):
+        self.browser.quit()
+        self.display.stop()

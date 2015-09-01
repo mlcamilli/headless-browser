@@ -1,6 +1,6 @@
 FROM orchardup/python:2.7
 RUN apt-get update --fix-missing
-RUN apt-get install -y chromium-browser python python-pip python-dev git
+RUN apt-get install -y chromium-browser python python-pip python-dev git firefox
 RUN apt-get install -y unzip wget xvfb
 RUN wget http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip
 RUN unzip chromedriver_linux64.zip -d /usr/bin/
