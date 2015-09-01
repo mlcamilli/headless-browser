@@ -8,6 +8,7 @@ class Scraper(object):
 
     def __init__(self, proxy=None):
         self.service_args = []
+        self.proxy = None
         if proxy:
             self.proxy = proxy
             self.service_args.append('--proxy={}'.format(proxy))
