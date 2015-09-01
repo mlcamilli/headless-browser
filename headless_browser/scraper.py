@@ -9,6 +9,7 @@ class Scraper(object):
     def __init__(self, proxy=None):
         self.service_args = []
         if proxy:
+            self.proxy = proxy
             self.service_args.append('--proxy={}'.format(proxy))
             # Can be http or socks5
             self.service_args.append('--proxy-type=http')
@@ -73,5 +74,5 @@ class ChromeScraper(Scraper):
 class FirefoxScraper(Scraper):
 
     def initialize(self):
-        self.browser = webdriver.Firefox(desired_capabilities=self.desired,
-                                         service_args=self.service_args)
+        self.browser = webdriver.Firefox(capabilities=self.desired,
+                                         proxy=self.proxy)
