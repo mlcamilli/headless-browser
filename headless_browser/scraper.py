@@ -21,9 +21,10 @@ class Scraper(object):
         )
         self.initialize()
 
-    def initialize(self):
+    def initialize(self, size=(1920, 1080)):
         self.browser = webdriver.PhantomJS(desired_capabilities=self.desired,
                                            service_args=self.service_args)
+        self.browser.set_window_size(*size)
 
     def quit(self):
         self.browser.quit()
