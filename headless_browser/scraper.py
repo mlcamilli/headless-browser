@@ -61,8 +61,8 @@ class Scraper(object):
 
 class ChromeScraper(Scraper):
 
-    def initialize(self):
-        self.display = Display(visible=0, size=(1920, 1080))
+    def initialize(self, size=(1920, 1080)):
+        self.display = Display(visible=0, size=size)
         self.display.start()
         self.browser = webdriver.Chrome(desired_capabilities=self.desired,
                                         service_args=self.service_args)
@@ -74,8 +74,8 @@ class ChromeScraper(Scraper):
 
 class FirefoxScraper(Scraper):
 
-    def initialize(self):
-        self.display = Display(visible=0, size=(1920, 1080))
+    def initialize(self, size=(1920, 1080)):
+        self.display = Display(visible=0, size=size)
         self.display.start()
         self.browser = webdriver.Firefox(capabilities=self.desired,
                                          proxy=self.proxy)

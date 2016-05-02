@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
 requires = [
-    'PyVirtualDisplay==0.1.5',
-    'selenium==2.47.1',
+    'PyVirtualDisplay==0.2',
+    'selenium==2.53.2',
 ]
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 
 setup(
