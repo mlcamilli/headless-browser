@@ -6,7 +6,8 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class Scraper(object):
 
-    def __init__(self, proxy=None):
+    def __init__(self, proxy=None, size=(1920, 1080)):
+        self.size = size
         self.service_args = []
         self.proxy = None
         if proxy:
@@ -21,10 +22,10 @@ class Scraper(object):
         )
         self.initialize()
 
-    def initialize(self, size=(1920, 1080)):
+    def initialize(self):
         self.browser = webdriver.PhantomJS(desired_capabilities=self.desired,
                                            service_args=self.service_args)
-        self.browser.set_window_size(*size)
+        self.browser.set_window_size(*self.size)
 
     def quit(self):
         self.browser.quit()
@@ -62,8 +63,8 @@ class Scraper(object):
 
 class ChromeScraper(Scraper):
 
-    def initialize(self, size=(1920, 1080)):
-        self.display = Display(visible=0, size=size)
+    def initialize(self):
+        self.display = Display(visible=0, size=self.size)
         self.display.start()
         self.browser = webdriver.Chrome(desired_capabilities=self.desired,
                                         service_args=self.service_args)
@@ -75,8 +76,8 @@ class ChromeScraper(Scraper):
 
 class FirefoxScraper(Scraper):
 
-    def initialize(self, size=(1920, 1080)):
-        self.display = Display(visible=0, size=size)
+    def initialize(self):
+        self.display = Display(visible=0, size=self.size)
         self.display.start()
         self.browser = webdriver.Firefox(capabilities=self.desired,
                                          proxy=self.proxy)
