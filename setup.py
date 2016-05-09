@@ -7,7 +7,7 @@ requires = [
 ]
 
 __version__ = ''
-with open('trackmaven_drf/__init__.py', 'r') as fd:
+with open('headless_browser/__init__.py', 'r') as fd:
     reg = re.compile(r'__version__ = [\'"]([^\'"]*)[\'"]')
     for line in fd:
         m = reg.match(line)
