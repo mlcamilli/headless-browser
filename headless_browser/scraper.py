@@ -83,5 +83,6 @@ class FirefoxScraper(Scraper):
                                          proxy=self.proxy)
 
     def quit(self):
+        print('THIS DOESNT GET CALLED ON EXIT')
         self.browser.quit()
         self.display.stop()
