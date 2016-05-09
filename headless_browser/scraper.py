@@ -54,7 +54,6 @@ class Scraper(object):
         select.select_by_value(value)
 
     def __enter__(self):
-        self.initialize()
         return self
 
     def __exit__(self, type, value, traceback):
@@ -83,6 +82,5 @@ class FirefoxScraper(Scraper):
                                          proxy=self.proxy)
 
     def quit(self):
-        print('THIS DOESNT GET CALLED ON EXIT')
         self.browser.quit()
         self.display.stop()
