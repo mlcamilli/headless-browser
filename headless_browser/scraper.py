@@ -100,13 +100,8 @@ class FirefoxScraper(Scraper):
         profile.set_preference(
             "browser.download.dir", self.download_folder)
         profile.set_preference(
-            "browser.helperApps.neverAsk.saveToDisk", "application/pdf")
-        profile.set_preference(
-            "browser.helperApps.neverAsk.saveToDisk", "text/csv")
-        profile.set_preference(
-            "browser.helperApps.neverAsk.saveToDisk", "image/png")
-        profile.set_preference(
-            "browser.helperApps.neverAsk.saveToDisk", "")
+            "browser.helperApps.neverAsk.saveToDisk",
+            "application/pdf,text/csv,image/png,image/svg+xml")
         self.display = Display(visible=0, size=self.size)
         self.display.start()
         self.browser = webdriver.Firefox(
