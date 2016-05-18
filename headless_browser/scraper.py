@@ -2,11 +2,15 @@ from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+import os
+import uuid
+import shutil
 
 
 class Scraper(object):
 
-    def __init__(self, proxy=None, size=(1920, 1080)):
+    def __init__(self, proxy=None, size=(1920, 1080), cleanup=True):
+        self.cleanup = cleanup
         self.size = size
         self.service_args = []
         self.proxy = None
@@ -76,11 +80,51 @@ class ChromeScraper(Scraper):
 class FirefoxScraper(Scraper):
 
     def initialize(self):
+        """
+        Initializes the scraper with a virtual display and a session specific
+        download folder.
+        """
+        if os.environ.get('HEADLESS_DOWNLOAD_FOLDER'):
+            download_folder = os.environ.get('HEADLESS_DOWNLOAD_FOLDER')
+        else:
+            download_folder = '{}/.downloads/'.format(os.getcwd())
+        if not os.path.exists(download_folder):
+            os.mkdir(download_folder)
+        # Generate a random folder name
+        self.download_folder = '{}{}/'.format(download_folder, uuid.uuid4())
+        profile = webdriver.FirefoxProfile()
+        profile.set_preference("browser.download.folderList", 2)
+        profile.set_preference(
+            "browser.download.manager.showWhenStarting", False)
+        profile.set_preference("pdfjs.disabled", True)
+        profile.set_preference(
+            "browser.download.dir", self.download_folder)
+        profile.set_preference(
+            "browser.helperApps.neverAsk.saveToDisk", "application/pdf")
+        profile.set_preference(
+            "browser.helperApps.neverAsk.saveToDisk", "text/csv")
+        profile.set_preference(
+            "browser.helperApps.neverAsk.saveToDisk", "image/png")
+        profile.set_preference(
+            "browser.helperApps.neverAsk.saveToDisk", "")
         self.display = Display(visible=0, size=self.size)
         self.display.start()
-        self.browser = webdriver.Firefox(capabilities=self.desired,
-                                         proxy=self.proxy)
+        self.browser = webdriver.Firefox(
+            firefox_profile=profile, capabilities=self.desired,
+            proxy=self.proxy)
+
+    def get_downloaded_files(self):
+        if not os.path.exists(self.download_folder):
+            return []
+        files = os.listdir(self.download_folder)
+        return ['{}{}'.format(self.download_folder, f) for f in files]
+
+    def get_first_file(self):
+        files = self.get_downloaded_files()
+        return None if not files else files[0]
 
     def quit(self):
         self.browser.quit()
         self.display.stop()
+        if self.cleanup:
+            shutil.rmtree(self.download_folder, ignore_errors=True)
