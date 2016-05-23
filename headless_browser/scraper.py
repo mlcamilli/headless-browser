@@ -102,6 +102,8 @@ class FirefoxScraper(Scraper):
         profile.set_preference(
             "browser.helperApps.neverAsk.saveToDisk",
             "application/pdf,text/csv,image/png,image/svg+xml")
+        # Make sure we use their fonts
+        profile.set_preference("browser.display.use_document_fonts" ,1)
         self.display = Display(visible=0, size=self.size)
         self.display.start()
         self.browser = webdriver.Firefox(
