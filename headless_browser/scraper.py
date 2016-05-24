@@ -99,11 +99,13 @@ class FirefoxScraper(Scraper):
         profile.set_preference("pdfjs.disabled", True)
         profile.set_preference(
             "browser.download.dir", self.download_folder)
+        profile.set_preference("font.name.serif.x-western", "sans-serif")
+        profile.set_preference("font.default.x-western", "sans-serif")
         profile.set_preference(
             "browser.helperApps.neverAsk.saveToDisk",
             "application/pdf,text/csv,image/png,image/svg+xml")
         # Make sure we use their fonts
-        profile.set_preference("browser.display.use_document_fonts" ,1)
+        profile.set_preference("browser.display.use_document_fonts", 1)
         self.display = Display(visible=0, size=self.size)
         self.display.start()
         self.browser = webdriver.Firefox(
