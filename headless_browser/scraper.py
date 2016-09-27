@@ -108,8 +108,10 @@ class FirefoxScraper(Scraper):
         profile.set_preference("browser.display.use_document_fonts", 1)
         self.display = Display(visible=0, size=self.size)
         self.display.start()
+        capabilities = DesiredCapabilities.FIREFOX
+        capabilities['marionette'] = True
         self.browser = webdriver.Firefox(
-            firefox_profile=profile, capabilities=self.desired,
+            firefox_profile=profile, capabilities=capabilities,
             proxy=self.proxy)
 
     def get_downloaded_files(self):
