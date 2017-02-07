@@ -9,8 +9,9 @@ import shutil
 
 class Scraper(object):
 
-    def __init__(self, proxy=None, size=(1920, 1080), cleanup=True):
+    def __init__(self, proxy=None, size=(1920, 1080), cleanup=True, preferences={}):
         self.cleanup = cleanup
+        self.preferences = preferences
         self.size = size
         self.service_args = []
         self.proxy = None
@@ -106,6 +107,9 @@ class FirefoxScraper(Scraper):
             "application/pdf,text/csv,image/png,image/svg+xml")
         # Make sure we use their fonts
         profile.set_preference("browser.display.use_document_fonts", 1)
+        profile.set_preference("print.always_print_silent", True)
+        for key, value in self.preferences.items():
+            profile.set_preference(key, value)
         self.display = Display(visible=0, size=self.size)
         self.display.start()
         self.browser = webdriver.Firefox(
