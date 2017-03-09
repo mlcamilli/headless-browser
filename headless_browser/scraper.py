@@ -98,6 +98,7 @@ class FirefoxScraper(Scraper):
         profile.set_preference(
             "browser.download.manager.showWhenStarting", False)
         profile.set_preference("pdfjs.disabled", True)
+        profile.set_preference("general.useragent.override", "TMScrappy")
         profile.set_preference(
             "browser.download.dir", self.download_folder)
         profile.set_preference("font.name.serif.x-western", "sans-serif")
